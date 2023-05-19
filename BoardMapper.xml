@@ -2,41 +2,43 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.board1.BoardMapper">
-    <insert id="insBoard" parameterType="BoardEntity">
-        INSERT INTO t_board
-        (title, ctnt, writer)
-        VALUES
-        ( #{title}, #{ctnt}, #{writer})
-    </insert>
+<mapper namespace="com.green.myboard1.BoardMapper">
 
-    <update id="updBoard">
-        UPDATE t_board
-        SET title = #{title}
-        , ctnt = #{ctnt}
-        , writer = #{writer}
-        , updated_at = current_timestamp()
-        WHERE iboard = #{iboard}
-    </update>
-
-    <delete id="delBoard">
-        delete from t_board where iboard = #{iboard}
-    </delete>
-
+<insert id="insBoard" parameterType="BoardEntity">
+    INSERT INTO t_myboard1
+    (title,ctnt,writer, memo)
+    VALUES
+    ( #{title}, #{ctnt}, #{writer}, #{memo} )
+</insert>
 
     <select id="selBoardAll" resultType="BoardEntity">
         SELECT
-            iboard, title, ctnt, writer
-            , created_at createdAt, updated_at updatedAt
-        FROM t_board
+        idx, title, ctnt, writer, memo, created_at createdAt, updated_at updatedAt
+        FROM t_myboard1
     </select>
-    
+
+    <update id="updBoard">
+        UPDATE t_myboard1
+        SET
+        title = #{title}
+        , ctnt = #{ctnt}
+        , writer = #{writer}
+        , memo = #{memo}
+        , updated_at = current_timestamp()
+        WHERE idx = #{idx}
+    </update>
+
+    <delete id="delBoard">
+        DELETE FROM t_myboard1
+        WHERE idx = #{idx}
+    </delete>
+
     <select id="selBoardById" resultType="BoardEntity">
         SELECT
-        iboard, title, ctnt, writer
+        idx, title, ctnt, writer
         , created_at createdAt, updated_at updatedAt
-        FROM t_board
-        WHERE iboard = #{iboard}
+        FROM t_myboard1
+        WHERE idx = #{idx}
     </select>
 
 </mapper>

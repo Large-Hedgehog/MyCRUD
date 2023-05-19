@@ -1,4 +1,4 @@
-package com.green.board1;
+package com.green.myboard1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,12 +7,18 @@ import javax.swing.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/myboard1")
 public class BoardController {
     private final BoardService service;
+
     @Autowired
     public BoardController(BoardService service){
         this.service = service;
+    }
+
+    @GetMapping
+    public List<BoardEntity> boardGetAll(){
+        return service.selBoardAll();
     }
 
     @PostMapping
@@ -27,23 +33,21 @@ public class BoardController {
         return service.updBoard(entity);
     }
 
-    @DeleteMapping("/{iboard}")
-    public int delBoard(@PathVariable int iboard){
+    @DeleteMapping("/{idx}")
+    public int delBoard(@PathVariable int idx){
         BoardEntity entity = new BoardEntity();
-        entity.setIboard(iboard);
+        entity.setIdx(idx);
         System.out.println(entity);
         return service.delBoard(entity);
     }
 
-    @GetMapping
-    public List<BoardEntity> boardGetAll(){
-        return service.selBoardAll();
-    }
 
-    @GetMapping("/{iboard}")
-    public BoardEntity selBoardById(@PathVariable int iboard){
+    @GetMapping("/{idx}")
+    public BoardEntity boardGetById(@PathVariable int idx) {
         BoardEntity entity = new BoardEntity();
-        entity.setIboard(iboard);
+        entity.setIdx(idx);
         return service.selBoardById(entity);
     }
+
+
 }
