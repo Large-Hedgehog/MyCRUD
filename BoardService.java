@@ -1,4 +1,4 @@
-package com.green.board1;
+package com.green.myboard1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public class BoardService {
-
+    @Autowired
     private final BoardMapper mapper;
 
     @Autowired
@@ -15,19 +15,20 @@ public class BoardService {
         this.mapper = mapper;
     }
 
+
     public int insBoard(BoardEntity entity){
-        System.out.println("service-insBoard");
+        System.out.println("ins-Board");
         mapper.insBoard(entity);
         return 1;
     }
 
-    public List<BoardEntity> selBoardAll(){
+    public List<BoardEntity>selBoardAll(){
         return mapper.selBoardAll();
     }
-
-    public BoardEntity selBoardById(BoardEntity entity){
+    public BoardEntity selBoardById(BoardEntity entity) {
         return mapper.selBoardById(entity);
     }
+
 
     public int updBoard(BoardEntity entity){
         System.out.println("service-updBoard");
@@ -35,7 +36,9 @@ public class BoardService {
         return 1;
     }
 
-    public int delBoard(BoardEntity entity){
+    public int delBoard(BoardEntity entity) {
         return mapper.delBoard(entity);
     }
+
+
 }
