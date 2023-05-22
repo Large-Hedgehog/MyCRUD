@@ -1,12 +1,12 @@
 package com.green.board7.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import lombok.Data;
+@Getter
+@AllArgsConstructor
 
-@Data
-public class BoardEntity {
-    // db테이블과 1:1 매핑되게 작성
-
+public class BoardDetailVo {
     private int idx;
     private String title;
     private String ctnt;
@@ -15,3 +15,4 @@ public class BoardEntity {
     private String createdAt;
     private String updatedAt;
 }
+

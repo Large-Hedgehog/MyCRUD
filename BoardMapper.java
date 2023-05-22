@@ -1,16 +1,18 @@
-package com.green.board1;
+package com.green.board7;
 
+import com.green.board7.model.BoardDetailVo;
+import com.green.board7.model.BoardDto;
+import com.green.board7.model.BoardInsDto;
+import com.green.board7.model.BoardVo;
 import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    void insBoard(BoardEntity entity);
-    List<BoardEntity> selBoardAll();
-    BoardEntity selBoardById(BoardEntity entity);
-    //1줄만
-    void updBoard(BoardEntity entity);
-
-    int delBoard(BoardEntity entity);
+    int insBoard(BoardInsDto dto);
+    // 영향받은 행 수가 리턴된다
+    int updBoard(BoardDto dto);
+    int delBoard(BoardDto dto);
+    List<BoardVo> selBoardAll();
+    BoardDetailVo selBoardById(BoardDto dto);
 }

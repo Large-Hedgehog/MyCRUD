@@ -1,49 +1,68 @@
-package com.green.board1;
+package com.green.board7;
 
+
+import com.green.board7.model.BoardDetailVo;
+import com.green.board7.model.BoardDto;
+import com.green.board7.model.BoardInsDto;
+import com.green.board7.model.BoardVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
 
-import javax.swing.*;
 import java.util.List;
-
+@Tag(name = "게시판" , description = "게시판 CRUD")
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/")
 public class BoardController {
+    // CRUD
+    private final Logger LOGGER;
     private final BoardService service;
+
+
     @Autowired
     public BoardController(BoardService service){
+        LOGGER = LoggerFactory.getLogger(BoardController.class);
         this.service = service;
     }
 
     @PostMapping
-    public int boardPost(@RequestBody BoardEntity entity){
-        System.out.println(entity);
-        return service.insBoard(entity);
+    @Operation(summary = "글등록", description = "글을 등록할 수 있습니다"
+    + "title : 제목 <br>"
+    + "ctnt : 내용 <br>"
+    + "writer : 작성자 <br>"
+    + "memo : 메모 <br>")
+    public int postBoard(@RequestBody BoardInsDto dto){
+        LOGGER.warn("경고. 글 등록이 됩니다");
+        return service.insBoard(dto);
     }
 
     @PutMapping
-    public int putBoard(@RequestBody BoardEntity entity){
-        System.out.println(entity);
-        return service.updBoard(entity);
+    public int putBoard(@RequestBody BoardDto Insdto){
+        return service.updBoard(Insdto);
     }
 
-    @DeleteMapping("/{iboard}")
-    public int delBoard(@PathVariable int iboard){
-        BoardEntity entity = new BoardEntity();
-        entity.setIboard(iboard);
-        System.out.println(entity);
-        return service.delBoard(entity);
+    @DeleteMapping("/{idx}")
+    public int delBoard(@PathVariable int idx){
+        BoardDto dto = new BoardDto();
+        dto.setIdx(idx);
+        return service.delBoard(dto);
     }
 
     @GetMapping
-    public List<BoardEntity> boardGetAll(){
+    public List<BoardVo> getBoard(){
         return service.selBoardAll();
     }
 
-    @GetMapping("/{iboard}")
-    public BoardEntity selBoardById(@PathVariable int iboard){
-        BoardEntity entity = new BoardEntity();
-        entity.setIboard(iboard);
-        return service.selBoardById(entity);
+    @GetMapping("/{idx}")
+    public BoardDetailVo getBoardById(@PathVariable int idx){
+        BoardDto dto = new BoardDto();
+        dto.setIdx(idx);
+
+        LOGGER.info(dto.toString());
+        return service.selBoardById(dto);
     }
+
 }
